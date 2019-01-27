@@ -1,0 +1,3 @@
+﻿  TreeSerialization.cpp
+d:\своё производство\treeserialization\treeserialization\treeserialization.cpp(142): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  TreeSerialization.vcxproj -> D:\Своё производство\TreeSerialization\x64\Debug\TreeSerialization.exe
