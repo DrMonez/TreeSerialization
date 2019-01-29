@@ -18,7 +18,6 @@ string ConvertCharVectorToString(const vector<char>& convertToString)
 ostream& operator <<(ostream& os, const vector<char>& string)
 {
 	for (char symbol : string)
-		//os << symbol;
 		os.write(&symbol, sizeof(char));
 	return os;
 }
@@ -29,7 +28,6 @@ istream& operator >>(istream& is, vector<char>& string)
 	streambuf* pbuf = is.rdbuf();
 	while (pbuf->sgetc() != '\0')
 	{
-		//is >> c;
 		is.read(reinterpret_cast<char*>(&c), sizeof(c));
 		string.push_back(c);
 	}
@@ -41,7 +39,6 @@ ostream& operator <<(ostream& os, const Node& node)
 {
 	vector<char> charVector;
 	char type;
-	//char space = ' ';
 	double doubleValue;
 	int intValue;
 	switch (node.type)
@@ -49,32 +46,24 @@ ostream& operator <<(ostream& os, const Node& node)
 	case 's':
 		type = 's';
 		os.write(&type, sizeof(type));
-		//os.write(&space, sizeof(space));
 		charVector = ConvertStringToChar(node.stringValue);
 		os << charVector;
-		//os << 's' << ' ' << ConvertStringToChar(node.stringValue);
 		break;
 	case 'i':
 		type = 'i';
 		os.write(&type, sizeof(char));
-		//os.write(&space, sizeof(space));
 		intValue = node.intValue;
 		os.write(reinterpret_cast<const char*>(&intValue), sizeof(intValue));
-		//os << 'i' << ' ' << node.intValue;
 		break;
 	case 'd':
 		type = 'd';
 		os.write(&type, sizeof(char));
-		//os.write(&space, sizeof(space));
 		doubleValue = node.doubleValue;
 		os.write(reinterpret_cast<const char*>(&doubleValue), sizeof(doubleValue));
-		//os << 'd' << ' ' << node.doubleValue;
 		break;
 	}
 	intValue = node.childs.size();
-	//os.write(&space, sizeof(space));
 	os.write(reinterpret_cast<const char*>(&intValue), sizeof(intValue));
-	//os << ' ' << node.childs.size();
 	return os;
 }
 
@@ -84,7 +73,6 @@ istream& operator >>(istream& is, Node& node)
 	double doubleValue;
 	int intValue;
 	vector<char> string;
-	//is >> type;
 	is.read(reinterpret_cast<char*>(&type), sizeof(type));
 	switch (type)
 	{
@@ -92,19 +80,16 @@ istream& operator >>(istream& is, Node& node)
 		node.type = STRING;
 		is >> string;
 		node.stringValue = ConvertCharVectorToString(string);
-		//is >> node.stringValue;
 		break;
 	case 'i':
 		node.type = INT;
 		is.read(reinterpret_cast<char*>(&intValue), sizeof(intValue));
 		node.intValue = intValue;
-		//is >> node.intValue;
 		break;
 	case 'd':
 		node.type = DOUBLE;
 		is.read(reinterpret_cast<char*>(&doubleValue), sizeof(doubleValue));
 		node.doubleValue = doubleValue;
-		//is >> node.doubleValue;
 		break;
 	}
 	return is;
