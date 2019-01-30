@@ -95,40 +95,40 @@ istream& operator >>(istream& is, Node& node)
 	return is;
 }
 
-void WriteNodeInConsole(const Node& node)
+void Node::WriteNodeInConsole()
 {
-	switch (node.type)
+	switch (type)
 	{
 	case 's':
-		cout << '"' << ConvertStringToChar(node.stringValue) << '"';
+		cout << '"' << ConvertStringToChar(stringValue) << '"';
 		break;
 	case 'i':
-		cout << node.intValue;
+		cout << intValue;
 		break;
 	case 'd':
-		cout << node.doubleValue;
+		cout << doubleValue;
 	}
 	cout << endl;
 }
 
 int du = 0;
 
-void CreateTree(Node& node)
+void Node::CreateTree()
 {
 	if (du % 3 == 0)
 	{
-		node.type = DOUBLE;
-		node.doubleValue = du + 0.015;
+		type = DOUBLE;
+		doubleValue = du + 0.015;
 	}
 	if (du % 3 == 1)
 	{
-		node.type = INT;
-		node.intValue = du;
+		type = INT;
+		intValue = du;
 	}
 	if (du % 3 == 2)
 	{
-		node.type = STRING;
-		node.stringValue = to_string(du);
+		type = STRING;
+		stringValue = to_string(du);
 	}
 	du++;
 
@@ -137,32 +137,32 @@ void CreateTree(Node& node)
 		Node* child1 = new Node;
 		Node* child2 = new Node;
 		Node* child3 = new Node;
-		node.childs.push_back(child1);
-		node.childs.push_back(child2);
-		node.childs.push_back(child3);
-		for (auto child : node.childs)
-			CreateTree(*child);
+		childs.push_back(child1);
+		childs.push_back(child2);
+		childs.push_back(child3);
+		for (Node* child : childs)
+			child->CreateTree();
 	}
 }
 
-void WriteTreeInFile(ofstream& ofs, Node& node)
+void Node::WriteTreeInFile(ofstream& ofs)
 {
-	ofs << node;
-	for (auto child : node.childs)
-		WriteTreeInFile(ofs, *child);
+	ofs << *this;
+	for (auto child : childs)
+		child->WriteTreeInFile(ofs);
 }
 
-void WriteTreeInConsole(Node* node, int tabCount)
+void Node::WriteTreeInConsole(int tabCount)
 {
 	cout << "|";
 	for (int i = 0; i < tabCount; i++)
 		cout << "___";
-	WriteNodeInConsole(*node);
-	for (auto child : node->childs)
-		WriteTreeInConsole(child, tabCount + 1);
+	WriteNodeInConsole();
+	for (auto child : childs)
+		child->WriteTreeInConsole(tabCount + 1);
 }
 
-void RecursiveReading(ifstream& ifs, Node& node)
+void Node::RecursiveReading(ifstream& ifs)
 {
 	streambuf* pbuf = ifs.rdbuf();
 	int s_int = pbuf->sgetc();
@@ -170,13 +170,13 @@ void RecursiveReading(ifstream& ifs, Node& node)
 	{
 		int childsCount;
 
-		ifs >> node;
+		ifs >> *this;
 		ifs.read(reinterpret_cast<char*>(&childsCount), sizeof(childsCount));
 		for (int i = 0; i < childsCount; i++)
 		{
 			Node* child = new Node;
-			node.childs.push_back(child);
-			RecursiveReading(ifs, *child);
+			childs.push_back(child);
+			child->RecursiveReading(ifs);
 		}
 
 	}

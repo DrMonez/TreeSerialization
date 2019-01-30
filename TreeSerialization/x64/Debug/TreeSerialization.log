@@ -1,3 +1,6 @@
-﻿  TreeSerialization.cpp
+﻿  Structures.cpp
+d:\своё производство\treeserialization\treeserialization\structures.cpp(65): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+  TreeSerialization.cpp
 d:\своё производство\treeserialization\treeserialization\treeserialization.cpp(5): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  Создание кода...
   TreeSerialization.vcxproj -> D:\Своё производство\TreeSerialization\x64\Debug\TreeSerialization.exe

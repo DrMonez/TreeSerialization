@@ -17,24 +17,30 @@ typedef enum
 
 class Node
 {
+	void WriteNodeInConsole();
 public:
 	data_type_t type;
 	int intValue;
 	double doubleValue;
 	string stringValue;
 	vector<Node*> childs;
+
+	void RecursiveReading(ifstream& ifs);
+	void WriteTreeInConsole(int tabCount);
+	void WriteTreeInFile(ofstream& ofs);
+	void CreateTree();
 };
 
-void RecursiveReading(ifstream& ifs, Node& node);
-void WriteTreeInConsole(Node* node, int tabCount);
-void WriteTreeInFile(ofstream& ofs, Node& node);
-void CreateTree(Node& node);
+//void RecursiveReading(ifstream& ifs, Node& node);
+//void WriteTreeInConsole(Node* node, int tabCount);
+//void WriteTreeInFile(ofstream& ofs, Node& node);
+//void CreateTree(Node& node);
 
 vector<char> ConvertStringToChar(const string& convertToCharVector);
 
 string ConvertCharVectorToString(const vector<char>& convertToString);
 
-void WriteNodeInConsole(const Node& node);
+//void WriteNodeInConsole(const Node& node);
 
 ostream& operator <<(ostream& os, const Node& node);
 istream& operator >>(istream& is, Node& node);
